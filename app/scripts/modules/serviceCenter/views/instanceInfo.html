@@ -1,0 +1,12 @@
+<table class="table table-bordered table-responsive margin20" >
+    <tbody>
+
+    <div class="well" ng-if="service.length != 0" style="margin-top: 50px">
+        <pre>{{instance | json}}</pre>
+    </div>
+    <tr ng-if="service.length == 0" class="text-center">
+        <td colspan="5">{{ "noPropertiesFound" | translate }}</td>
+    </tr>
+    </tbody>
+</table>
+

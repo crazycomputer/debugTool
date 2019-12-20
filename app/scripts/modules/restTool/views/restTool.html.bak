@@ -1,0 +1,260 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<div class="col-sm-8 col-md-8 col-lg-12 pb-50">
+    <div class="panel panel-default">
+        <div class="panel-heading fw-600 h-42">
+            <span class="pull-left">{{ "url" | translate }}</span>
+        </div>
+        <div class="panel-body">
+            <div class="row m0 pull-left" layout="row" >
+                <md-input-container class="md-block col-md-offset-1  url-input" flex-gt-sm>
+                    <md-select class="restToolSelect" ng-model="restMethod" aria-label="restMethod"
+                               ng-change="selectMethod(restMethod)"
+                               ng-init="selectMethod(restMethod)">
+                        <md-option value='get'>GET</md-option>
+                        <md-option value='post'>POST</md-option>
+                        <md-option value='put'>PUT</md-option>
+                        <md-option value='delete'>DELETE</md-option>
+                        <md-option value='head'>HEAD</md-option>
+                        <md-option value='trace'>TRACE</md-option>
+                        <md-option value='patch'>PATCH</md-option>
+                        <md-option value='options'>OPTIONS</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="md-block col-md-offset-2  url-input" flex-gt-sm>
+                    <md-select class="restToolSelect" ng-model="restProtocol" aria-label="restProtocol"
+                               ng-change="selectProtocol(restProtocol)"
+                               ng-init="selectProtocol(restProtocol)">
+                        <md-option value='cse'>cse://</md-option>
+                        <md-option value='http'>http://</md-option>
+                        <md-option value='https'>https://</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container id="restToolUrl" class="md-block  url-input"  flex-gt-sm>
+                    <input type="text" style="width:1000%" ng-model="url" aria-label="url" autocomplete="off">
+                </md-input-container>
+            </div>
+
+        </div>
+        <md-input-container  id="restToolSubmit" class="md-block" flex-gt-sm>
+            <md-button  class="btn btn-primary">
+                提交
+            </md-button>
+        </md-input-container>
+    </div>
+</div>
+
+
+<div class="row">
+
+    <div class="col-xs-6 col-md-4">
+
+    </div>
+    <div class="col-xs-6 col-md-4">
+
+    </div>
+
+</div>
+<div class="panel panel-default" style='min-height:200px;'>
+    <div class="pannel-tab-header" ret='reqresult'>
+        <span class='pannel-tab-span nactive' ws='requestbody'>Body</span>
+        <span class='pannel-tab-span' ws='requestcookie'>Cookie</span>
+        <span class='pannel-tab-span' ws='requestheader'>Headers</span>
+    </div>
+    <div class="panel-body">
+        <div class='pannel-body-content pbc-active reqresult' id='requestbody'>
+            <div id='requestheadercontenttype'>
+                <label class="radio-inline">
+                    <input type='radio' class='newradio' name="httpcontenttype" id="httpurlencode" value="1"
+                           checked> x-www-form-urlencode
+                    <select name='' class='requestheadercontenttype_select ' id='httpcontenttype_select_1'>
+                        <option value="kvchuan">kv串</option>
+                        <option value="kv">key/value</option>
+                    </select>
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="httpcontenttype" class='newradio' id="inlineRadio2" value="2"> raw
+                    <select name='' id='httpcontenttype_select_2'
+                            class='requestheadercontenttype_select display_none' style='width:200px'>
+                        <option value="application/json">json(application/json)</option>
+                        <option value="application/javascript">javascript(application/javascript)</option>
+                        <option value="text/plain">text(text/plain)</option>
+                        <option value="application/xml">xml(application/xml)</option>
+                        <option value="text/javascript">javascript(text/javascript)</option>
+                        <option value="text/html">html(text/html)</option>
+                        <option value="custom">custom(自定义content-type)</option>
+                    </select>
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="httpcontenttype" class='newradio' value="3"> form-data
+                </label>
+            </div>
+            <div class='pannel-result'>
+                <div>
+                    <div class='requestkeyvalue' id='httpcontenttype_1'>
+                        <div id='httpcontenttype_1_kvchuan'>
+                                      <textarea rows="3" cols="100" id='param'
+                                                class="form-control mousetextarea"></textarea>
+                            <span class='zhushi'>例:a=b&c=d&e=f</span>
+                            <button type='button' class='btn kvtoarea btn-primary' style='float:right;'
+                                    toid='param'>kvtoarea
+                            </button>
+                        </div>
+                        <div id='httpcontenttype_1_kv' class='display_none'>
+                            <div class="form-inline input-line  " param='param'>
+                                <span style='margin-left:13px'></span>
+                                <input type="text" class="form-control keyupinput" placeholder="Key">
+                                <input type="text" class="inpuwidth form-control keyupinput" style='width:63%'
+                                       placeholder="Value"> &nbsp;&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <div class='requestkeyvalue display_none' id='httpcontenttype_2'>
+                        <textarea rows="3" cols="100" class="form-control" id='params_raw'></textarea>
+                        <span class='zhushi'>例:a=b&c=d&e=f</span>
+                    </div>
+                    <div class='requestkeyvalue display_none' id='httpcontenttype_3'>
+                        <div class="form-inline input-line " param='formdata'>
+                            <span style='margin-left:13px'></span>
+                            <input type="text" class="form-control keyupinputform" placeholder="Key">
+                            <input type="text" class="form-control keyupinputform inpuwidth" style='width:56%'
+                                   placeholder="Value"> &nbsp;&nbsp;
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='pannel-body-content reqresult' id='requestcookie'>
+            <label class="radio-inline">
+                <input type="radio" name="requestradio_ck" class='ownradio' toid='requestcookie_kv' value="kv"
+                       checked> KV
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="requestradio_ck" class='ownradio' toid='requestcookie_kvchuan'
+                       value="area"> AREA
+            </label>
+            <div style='margin-top:10px'>
+                <div id='requestcookie_kvchuan' class='display_none'>
+                    <textarea rows="3" cols="100" id='ck' class="form-control mousetextarea"></textarea>
+                    <span class='zhushi'>cookie的格式：key=value;key2=value2;key3=value3,可以如图所示获取：<a
+                                href='http://7oxfxm.com1.z0.glb.clouddn.com/cookie.png'
+                                target='_blank'>图示</a></span>
+                    <button type='button' class='btn kvtoarea btn-primary' style='float:right;' toid='ck'>
+                        kvtoarea
+                    </button>
+                </div>
+                <div id='requestcookie_kv'>
+                    <div class="form-inline input-line  " param='ck'>
+                        <span style='margin-left:13px'></span>
+                        <input type="text" class="form-control keyupinput" placeholder="Key">
+                        <input type="text" class="inpuwidth form-control keyupinput" style='width:63%'
+                               placeholder="Value"> &nbsp;&nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='pannel-body-content reqresult' id='requestheader'>
+            <label class="radio-inline">
+                <input type="radio" name="requestradio_header" class='ownradio' toid='requestheader_kv'
+                       value="kv" checked> KV
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="requestradio_header" class='ownradio' toid='requestheader_kvchuan'
+                       value="area"> AREA
+            </label>
+            <div style='margin-top:10px'>
+                <div id='requestheader_kvchuan' class='display_none'>
+                    <textarea rows="3" cols="100" id='header' class="form-control mousetextarea"></textarea>
+                    <span class='zhushi'>header的格式：key:value的格式,一行一条。如图：<a
+                                href='http://7oxfxm.com1.z0.glb.clouddn.com/header.png'
+                                target='_blank'>图示</a></span>
+                    <button type='button' class='btn kvtoarea btn-primary' style='float:right;' toid='header'>
+                        kvtoarea
+                    </button>
+                </div>
+                <div id='requestheader_kv'>
+                    <div class="form-inline input-line  " param='header'>
+                        <span style='margin-left:13px'></span>
+                        <input type="text" class="form-control keyupinput" placeholder="Key">
+                        <input type="text" class="inpuwidth form-control keyupinput" style='width:63%'
+                               placeholder="Value"> &nbsp;&nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <button type='button' class='btn btn-primary' id='subbtn' style="width:50%;height:40px;margin-button:5px">
+            提交
+        </button>&nbsp;&nbsp;
+        <button type='button' class='btn' id='newword' style="width:15%;height:40px;margin-button:5px;color:red">
+            生成文档
+        </button>&nbsp;&nbsp;
+        <button type='button' id='httptest' class='btn' onclick="javascript:window.location.href='/tool/history'"
+                style="width:15%;height:40px;margin-button:5px;">导出历史
+        </button>
+        <button type='button' class='btn clearform' style="width:16%;height:40px;margin-button:5px">清空表单</button>
+    </div>
+    <div class="panel panel-default" style='min-height:200px;margin-top:20px'>
+        <div class="pannel-tab-header" ret='retresult'>
+            <span class='pannel-tab-span nactive' ws='retbody'>Body</span>
+            <span class='pannel-tab-span' ws='retheader'>Headers</span>
+            <span class='pannel-tab-span' ws='retcookie'>Cookie</span>
+            <div class='retstatus' id='retstatusdis'></div>
+        </div>
+        <div class="panel-body">
+            <div class='pannel-body-content pbc-active retresult' id='retbody'>
+                <div class="btn-group form-inline" role="group" aria-label="...">
+                    <div class='bodyretdis'>
+                        <span class='bodyret bodyretdiscontent' aid='retpretty'>Pretty</span>
+                        <span class='bodyret' aid='retraw'>Raw</span>
+                        <span class='bodyret' aid='retpreview'>Preview</span>
+                    </div>
+
+                    <select name='code' id='outtype' class='form-control' disabled>
+                        <option value='fjson'>JSON</option>
+                        <option value='fxml'>XML</option>
+                        <option value='fhtml'>HTML</option>
+                        <option value='ftext'>TEXT</option>
+                    </select>
+
+                </div>
+
+                <div class='pannel-result bodyret_ret'>
+
+                    <div><textarea id="retpretty" name="retpretty">
+                               </textarea>
+                    </div>
+                    <div class='display_none'>
+                        <pre id="retraw" class='pannel-result-pre' style='height:300px;overflow: scroll'></pre>
+                    </div>
+                    <div class='display_none'>
+                        <iframe id="retpreview" class='' width="750" height="300" frameborder="no" border="0"
+                                marginwidth="0" marginheight="0" allowtransparency="yes"></iframe>
+                    </div>
+
+                </div>
+            </div>
+            <div class='pannel-body-content retresult' id='retheader'>
+                <p id="getresultheader" class='pannel-result-pre'></p>
+            </div>
+            <div class='pannel-body-content retresult' id='retcookie'>
+            </div>
+        </div>
+    </div>
+</div>

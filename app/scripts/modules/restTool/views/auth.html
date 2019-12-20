@@ -1,0 +1,70 @@
+<div>
+    <div class="mb-3">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input auth-check" type="radio" name="authOption"
+                   id="noAuth" value="noAuth" checked>
+            <label class="form-check-label" for="noAuth">No Auth</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input auth-check" type="radio" name="authOption"
+                   id="bearerToken" value="bearerToken">
+            <label class="form-check-label" for="bearerToken">Bearer Token</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input auth-check" type="radio" name="authOption"
+                   id="basicAuth" value="basicAuth">
+            <label class="form-check-label" for="basicAuth">Basic Auth</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input auth-check" type="radio" name="authOption"
+                   id="customAuth" value="customAuth">
+            <label class="form-check-label" for="customAuth">Custom</label>
+        </div>
+    </div>
+    <div class="my-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="auth-form noAuth" style="display: none;">
+                    <p class="text-muted">This request does not use any authorization.</p>
+                </div>
+                <div class="auth-form bearerToken" style="display: none;">
+                    <div class="form-group row">
+                        <label for="bearerTokenVal"
+                               class="col-sm-2 col-form-label">Token</label>
+                        <div class="col-sm-10">
+                                                        <textarea class="form-control" rows="10" id="bearerTokenVal"
+                                                                  name="bearerTokenVal"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="auth-form basicAuth" style="display: none;">
+                    <div class="form-group row">
+                        <label for="basicAuthUsernameVal" class="col-sm-2 col-form-label">Username</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control"
+                                   id="basicAuthUsernameVal" name="basicAuthUsernameVal"
+                                   value="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="basicAuthPasswordVal" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control"
+                                   id="basicAuthPasswordVal" name="basicAuthPasswordVal">
+                        </div>
+                    </div>
+                </div>
+                <div class="auth-form customAuth" style="display: none;">
+                    <div class="form-group row">
+                        <label for="customAuthHeaderVal" class="col-sm-2 col-form-label">Header</label>
+                        <div class="col-sm-10">
+                                                        <textarea class="form-control" rows="10"
+                                                                  id="customAuthHeaderVal"
+                                                                  name="customAuthHeaderVal"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

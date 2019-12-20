@@ -1,0 +1,329 @@
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width"/>
+
+<link rel="shortcut icon" href="/static/favicon.ico"/>
+<link rel="stylesheet" href="styles/jb.css"/>
+<link rel="stylesheet" href="styles/editor.css"/>
+<link rel="stylesheet" href="styles/app.css"/>
+<div class="container-fluid">
+    <div class="row">
+        <div id="restToolMain" class="col-md-10 col-lg-10 px-4">
+
+            <div class="pb-2 mb-3 border-bottom">
+                <h2 class="text-muted">
+                    Post HTTP Requests Online
+                    <img src="images/loader.gif" class="loader ml-5" style="display: none;"/>
+                </h2>
+                <span class="text-muted">Send HTTP requests to the server and check server responses</span>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-md-12" id="reqPane">
+                    <form method="post" action="#" id="reqForm">
+                        <input type="hidden" id="id" value="0">
+                        <input type="hidden" id="name" value="">
+
+                        <div class="d-flex flex-row justify-content-between py-1" id="reqTitle">
+                            <div class="" style="min-width: 100px;">
+                                <select class="custom-select d-block w-100" id="method">
+                                    <option value="GET" selected="selected">GET</option>
+                                    <option value="POST">POST</option>
+                                    <option value="PUT">PUT</option>
+                                    <option value="DELETE">DELETE</option>
+                                    <option value="HEAD">HEAD</option>
+                                </select>
+                            </div>
+                            <div class="ml-2 flex-grow">
+                                <input type="url" class="form-control" placeholder="https://" value=""
+                                       id="url">
+                            </div>
+                            <div class="ml-2" style="min-width: 120px;">
+                                <button class="btn btn-primary btn-block" type="submit" id="submit">Send</button>
+                            </div>
+                        </div>
+                        <div ng-cloak>
+                            <md-content>
+                                <md-tabs md-selected="selectedTab" md-dynamic-height md-border-bottom>
+                                    <md-tab label="Authorization" ng-click="Authorization()">
+                                    </md-tab>
+                                    <md-tab label="Headers" ng-click="Headers()">
+                                    </md-tab>
+                                    <md-tab label="Content" ng-click="Content()">
+                                    </md-tab>
+                                    <md-tab label="Raw" ng-click="Raw()">
+                                    </md-tab>
+                                </md-tabs>
+                            </md-content>
+                            <div ui-view="info"></div>
+                        </div>
+
+                        <!-- Request Nav Tabs -->
+                        <div class="tab-content">
+                            <!--authorization -->
+
+                            <!--headers-->
+                            <div class="tab-pane fade" id="pills-req-headers" role="tabpanel">
+                                <div class="mb-3">
+                                    <textarea class="form-control" id="headers" name="headers"
+                                              placeholder="Pragma: no-cache"></textarea>
+                                </div>
+                            </div>
+
+                            <!--content-->
+
+
+                            <!--raw-->
+
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-lg-6 col-md-12" id="resPane">
+                    <div id="resTitle" class="ml-3">
+                        <h5 class="d-flex mb-3 py-1">
+                            <span class="text-muted" id="resStatusDesc"></span>
+                            <span class="ml-2" id="resStatusCode"></span>
+
+                            <span class="text-muted" id="resTimeDesc"></span>
+                            <span class="ml-2" id="resTimeVal"></span>
+
+                            <span class="text-muted" id="resSizeDesc"></span>
+                            <span class="ml-2" id="resSizeVal"></span>
+                        </h5>
+                    </div>
+
+                    <div id="resDetails" class="ml-3" style="display: none;">
+                        <!-- Response Nav Pills -->
+                        <ul class="nav nav-pills http-tabs mb-3" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="pill" href="#pills-res-content" role="tab">Content</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="pill" href="#pills-res-headers" role="tab">Headers</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="pill" href="#pills-res-raw" role="tab">Raw</a>
+                            </li>
+                        </ul>
+
+                        <!-- Response Nav Tabs -->
+                        <div class="tab-content">
+                            <!--content-->
+                            <div class="tab-pane fade show active" id="pills-res-content" role="tabpanel">
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" id="resContentType" readonly>
+                                </div>
+
+                                <div class="mb-3">
+                                    <textarea class="form-control" id="resContent" readonly></textarea>
+                                </div>
+                            </div>
+                            <!--headers-->
+                            <div class="tab-pane fade" id="pills-res-headers" role="tabpanel">
+                                <textarea class="form-control" id="resHeader" readonly></textarea>
+                            </div>
+                            <!--raw-->
+                            <div class="tab-pane fade" id="pills-res-raw" role="tabpanel">
+                                <textarea class="form-control" id="resRaw" readonly></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<!-- Name Dialog -->
+<div class="modal fade" id="nameModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Enter Request Name</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="#">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="nameName" name="nameName">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary modalCancel" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary modalOk" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Dialog -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you shure you want to delete the request?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary modalCancel" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary modalOk" data-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Share Dialog -->
+<div class="modal fade" id="shareModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Your request has been shared</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5>
+                    <a href="#" class="shareLink" target="_blank"></a>
+                </h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary modalOk" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Message Box -->
+<div class="modal fade" id="messageBoxModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-message">Message</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary modalOk" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Contact Form -->
+<div class="modal fade" id="contactModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Contact Us</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="#">
+                    <div class="form-group">
+                        <label for="signupPassword">Name</label>
+                        <input type="text" class="form-control" id="contactName" name="contactName">
+                    </div>
+                    <div class="form-group">
+                        <label for="signupEmail">Email Address</label>
+                        <input type="email" class="form-control" id="contactEmail" name="contactEmail">
+                    </div>
+                    <div class="form-group">
+                        <label for="signupEmail">Message</label>
+                        <textarea class="form-control" id="contactMessage" name="contactMessage" rows="5" cols="10">
+                        </textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary modalCancel" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary modalOk" data-dismiss="modal">Send Message</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Reset Password Form -->
+<div class="modal fade" id="resetPasswordModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reset Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="#">
+                    <div class="form-group">
+                        <label for="resetPasswordEmail">Email Address</label>
+                        <input type="email" class="form-control" id="resetPasswordEmail" name="resetPasswordEmail">
+                    </div>
+                    <div class="form-group">
+                        <label for="resetPasswordPassword">New Password</label>
+                        <input type="password" class="form-control" id="resetPasswordPassword"
+                               name="resetPasswordPassword">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary modalCancel" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary modalOk" data-dismiss="modal">Reset Password</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Embed Form -->
+<div class="modal fade" id="embedModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Embed ReqBin widget into your website</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="#">
+                    <div class="form-group code">
+                        <h6>Copy & Paste Code</h6>
+                        <textarea class="form-control" id="embedCode" name="embedCode" rows="5" cols="10" readonly>
+                        </textarea>
+                    </div>
+                    <div class="form-group">
+                        <h6>Widget Preview</h6>
+                        <div class="rb-preview"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    window.authorized = false;
+
+</script>
+
+
